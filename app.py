@@ -208,7 +208,7 @@ def get_posts():
     try:
         client = get_client()
         info   = client.user_info_by_username_v1(TARGET_ACCOUNT)
-        medias = client.user_medias(info.pk, amount=1080)
+        medias = client.user_medias(info.pk, amount=10)
 
         # posts = []
         # for m in medias:
