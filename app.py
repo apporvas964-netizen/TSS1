@@ -2,11 +2,9 @@ from flask import Flask, render_template, jsonify
 from instagrapi import Client
 import os
 
-import os
+from flask import Flask, send_file
 
 app = Flask(__name__)
-
-
 
 port = int(os.environ.get("PORT", 5000))
 
@@ -36,7 +34,8 @@ def get_client():
 
 @app.route("/")
 def index():
-    return render_template("index.html", target=TARGET_ACCOUNT)
+    # return render_template("index.html", target=TARGET_ACCOUNT)
+    return send_file("index.html", target=TARGET_ACCOUNT)
 
 @app.route("/api/profile")
 def get_profile():

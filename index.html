@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Suit Story</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --cream: #faf7f2;
+            --warm: #f5efe6;
+            --dark: #1a1612;
+            --mid: #3d3530;
+            --gold: #b8975a;
+            --gold-light: #d4b483;
+            --border: #e8ddd0;
+            --muted: #8a7968;
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: var(--cream);
+            color: var(--dark);
+            font-family: 'Jost', sans-serif;
+            font-weight: 300;
+            overflow-x: hidden
+        }
+
+        /* SPLASH */
+        #splash {
+            position: fixed;
+            inset: 0;
+            background: var(--cream);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem
+        }
+
+        .sl-logo {
+            opacity: 0;
+            transform: scale(0.85);
+            animation: sLogo 1s cubic-bezier(.16, 1, .3, 1) .2s forwards
+        }
+
+        .sl-logo img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: contain
+        }
+
+        .sl-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: .18em;
+            opacity: 0;
+            transform: translateY(14px);
+            animation: sText .9s cubic-bezier(.16, 1, .3, 1) .8s forwards
+        }
+
+        .sl-tag {
+            font-size: .65rem;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: var(--muted);
+            opacity: 0;
+            animation: sText .9s ease 1.3s forwards
+        }
+
+        .sl-line {
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            animation: sLine .7s ease 1.8s forwards
+        }
+
+        @keyframes sLogo {
+            to {
+                opacity: 1;
+                transform: scale(1)
+            }
+        }
+
+        @keyframes sText {
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes sLine {
+            to {
+                width: 70px
+            }
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(250, 247, 242, .93);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 58px
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: .55rem;
+            text-decoration: none
+        }
+
+        .nav-logo img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: contain
+        }
+
+        .nav-logo span {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            letter-spacing: .1em;
+            color: var(--dark)
+        }
+
+        .nav-cta {
+            background: var(--dark);
+            color: var(--cream);
+            border: none;
+            padding: .48rem 1.1rem;
+            font-family: 'Jost', sans-serif;
+            font-size: .7rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 2px;
+            text-decoration: none;
+            transition: background .2s
+        }
+
+        .nav-cta:hover {
+            background: var(--gold)
+        }
+
+        /* HERO */
+        #hero {
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 1.5rem 4rem;
+            position: relative;
+            background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(184, 151, 90, .08) 0%, transparent 70%), var(--cream);
+            overflow: hidden
+        }
+
+        .hd {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(184, 151, 90, .12);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            animation: hpulse 4s ease-in-out infinite
+        }
+
+        .hd:nth-child(2) {
+            width: 480px;
+            height: 480px;
+            border-color: rgba(184, 151, 90, .07);
+            animation-delay: 1.2s
+        }
+
+        .hd:nth-child(1) {
+            width: 300px;
+            height: 300px
+        }
+
+        @keyframes hpulse {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1)
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.04)
+            }
+        }
+
+        .h-eye {
+            font-size: .62rem;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.1rem;
+            opacity: 0;
+            animation: fup .8s ease 2.3s forwards
+        }
+
+        .h-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.8rem, 11vw, 5.5rem);
+            font-weight: 300;
+            line-height: 1.08;
+            letter-spacing: .03em;
+            color: var(--dark);
+            opacity: 0;
+            animation: fup .9s ease 2.5s forwards
+        }
+
+        .h-title em {
+            font-style: italic;
+            color: var(--gold)
+        }
+
+        .h-sub {
+            font-size: .83rem;
+            line-height: 1.8;
+            color: var(--muted);
+            max-width: 310px;
+            margin: 1.4rem auto 0;
+            opacity: 0;
+            animation: fup .9s ease 2.7s forwards
+        }
+
+        .h-btns {
+            display: flex;
+            gap: .75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2.2rem;
+            opacity: 0;
+            animation: fup .9s ease 2.9s forwards
+        }
+
+        .btn-p {
+            background: var(--dark);
+            color: var(--cream);
+            padding: .82rem 1.9rem;
+            border: none;
+            cursor: pointer;
+            font-family: 'Jost', sans-serif;
+            font-size: .7rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: background .25s, transform .2s;
+            display: inline-block
+        }
+
+        .btn-p:hover {
+            background: var(--gold);
+            transform: translateY(-2px)
+        }
+
+        .btn-o {
+            background: transparent;
+            color: var(--dark);
+            padding: .82rem 1.9rem;
+            border: 1px solid var(--dark);
+            cursor: pointer;
+            font-family: 'Jost', sans-serif;
+            font-size: .7rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: all .25s;
+            display: inline-block
+        }
+
+        .btn-o:hover {
+            background: var(--dark);
+            color: var(--cream)
+        }
+
+        .scroll-h {
+            position: absolute;
+            bottom: 1.8rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .4rem;
+            opacity: 0;
+            animation: fup 1s ease 3.3s forwards
+        }
+
+        .scroll-h span {
+            font-size: .58rem;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--muted)
+        }
+
+        .sc-line {
+            width: 1px;
+            height: 38px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: scl 1.6s ease-in-out 3.6s infinite
+        }
+
+        @keyframes fup {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes scl {
+            0% {
+                transform: scaleY(0);
+                transform-origin: top
+            }
+
+            50% {
+                transform: scaleY(1);
+                transform-origin: top
+            }
+
+            51% {
+                transform-origin: bottom
+            }
+
+            100% {
+                transform: scaleY(0);
+                transform-origin: bottom
+            }
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 3.5rem 1.2rem
+        }
+
+        .s-label {
+            font-size: .6rem;
+            letter-spacing: .32em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: .5rem;
+            text-align: center
+        }
+
+        .s-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 6vw, 3rem);
+            font-weight: 300;
+            text-align: center;
+            color: var(--dark);
+            margin-bottom: .4rem;
+            line-height: 1.2
+        }
+
+        .s-sub {
+            text-align: center;
+            color: var(--muted);
+            font-size: .8rem;
+            line-height: 1.7;
+            max-width: 330px;
+            margin: 0 auto 2.2rem
+        }
+
+        /* PRODUCTS */
+        #products {
+            background: var(--warm)
+        }
+
+        .p-loader {
+            text-align: center;
+            padding: 3rem;
+            color: var(--muted);
+            font-size: .8rem
+        }
+
+        .spin {
+            display: inline-block;
+            width: 26px;
+            height: 26px;
+            border: 2px solid var(--border);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+            margin-bottom: .6rem
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .pgrid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: .75rem;
+            max-width: 960px;
+            margin: 0 auto
+        }
+
+        @media(min-width:560px) {
+            .pgrid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: .9rem
+            }
+        }
+
+        @media(min-width:860px) {
+            .pgrid {
+                grid-template-columns: repeat(4, 1fr)
+            }
+        }
+
+        .pcard {
+            background: #fff;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .04);
+            transition: transform .3s, box-shadow .3s;
+            opacity: 0;
+            transform: translateY(14px);
+            animation: cin .5s ease forwards
+        }
+
+        .pcard:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .09)
+        }
+
+        @keyframes cin {
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .pimg {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            background: var(--border);
+            cursor: pointer
+        }
+
+        .pimg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .4s ease;
+            display: block
+        }
+
+        .pcard:hover .pimg img {
+            transform: scale(1.05)
+        }
+
+        .rbadge {
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            background: rgba(0, 0, 0, .5);
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .rbadge svg {
+            width: 12px;
+            height: 12px;
+            fill: white
+        }
+
+        .pfooter {
+            padding: .65rem .6rem .75rem
+        }
+
+        .buy-btn {
+            display: block;
+            width: 100%;
+            background: var(--dark);
+            color: var(--cream);
+            border: none;
+            padding: .58rem;
+            font-family: 'Jost', sans-serif;
+            font-size: .62rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: background .2s;
+            text-align: center;
+            text-decoration: none
+        }
+
+        .buy-btn:hover {
+            background: var(--gold)
+        }
+
+        /* STORY */
+        #story {
+            background: var(--dark);
+            color: var(--cream);
+            text-align: center
+        }
+
+        #story .s-label {
+            color: var(--gold-light)
+        }
+
+        #story .s-title {
+            color: var(--cream)
+        }
+
+        .sq {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.25rem, 4vw, 1.9rem);
+            font-style: italic;
+            font-weight: 300;
+            color: var(--gold-light);
+            max-width: 400px;
+            margin: 0 auto 1.8rem;
+            line-height: 1.55
+        }
+
+        .founders {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            align-items: center;
+            margin-top: 2rem
+        }
+
+        @media(min-width:480px) {
+            .founders {
+                flex-direction: row;
+                justify-content: center
+            }
+        }
+
+        .fcard {
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 4px;
+            padding: 1.4rem 2rem;
+            max-width: 240px;
+            width: 100%;
+            transition: border-color .3s
+        }
+
+        .fcard:hover {
+            border-color: var(--gold)
+        }
+
+        .fname {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--cream);
+            margin-bottom: .25rem
+        }
+
+        .frole {
+            font-size: .62rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--gold-light)
+        }
+
+        /* CONTACT */
+        #contact {
+            background: var(--warm);
+            text-align: center
+        }
+
+        .ccards {
+            display: flex;
+            flex-direction: column;
+            gap: .9rem;
+            max-width: 380px;
+            margin: 0 auto
+        }
+
+        .ccard {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.3rem 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: .9rem;
+            text-decoration: none;
+            transition: border-color .25s, transform .25s, box-shadow .25s
+        }
+
+        .ccard:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, .06)
+        }
+
+        .cicon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0
+        }
+
+        .cicon svg {
+            width: 19px;
+            height: 19px
+        }
+
+        .cinfo {
+            text-align: left
+        }
+
+        .clabel {
+            font-size: .6rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: .15rem
+        }
+
+        .cname {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.08rem;
+            color: var(--dark);
+            font-weight: 400
+        }
+
+        .cnum {
+            font-size: .78rem;
+            color: var(--muted)
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: var(--cream);
+            text-align: center;
+            padding: 2.2rem 1.5rem
+        }
+
+        .fl img {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: contain;
+            opacity: .88
+        }
+
+        .fb {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            letter-spacing: .14em;
+            margin: .7rem 0 .25rem
+        }
+
+        .ft {
+            font-size: .62rem;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .28)
+        }
+
+        .fd {
+            width: 36px;
+            height: 1px;
+            background: var(--gold);
+            margin: 1.1rem auto
+        }
+
+        .fc {
+            font-size: .7rem;
+            color: rgba(255, 255, 255, .22)
+        }
+
+        /* LIGHTBOX */
+        #lb {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 9, 8, .92);
+            z-index: 500;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            backdrop-filter: blur(8px)
+        }
+
+        #lb.open {
+            display: flex
+        }
+
+        .lb-box {
+            max-width: 400px;
+            width: 100%;
+            background: #fff;
+            border-radius: 6px;
+            overflow: hidden;
+            animation: scIn .25s ease
+        }
+
+        @keyframes scIn {
+            from {
+                transform: scale(.9);
+                opacity: 0
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        .lb-box img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            display: block
+        }
+
+        .lb-act {
+            padding: .9rem
+        }
+
+        .lb-buy {
+            display: block;
+            width: 100%;
+            background: var(--dark);
+            color: var(--cream);
+            padding: .82rem;
+            border: none;
+            cursor: pointer;
+            font-family: 'Jost', sans-serif;
+            font-size: .72rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            border-radius: 2px;
+            text-align: center;
+            text-decoration: none;
+            transition: background .2s
+        }
+
+        .lb-buy:hover {
+            background: var(--gold)
+        }
+
+        .lb-close {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, .15);
+            border: 1px solid rgba(255, 255, 255, .2);
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .2s
+        }
+
+        .lb-close:hover {
+            background: rgba(255, 255, 255, .3)
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity .7s ease, transform .7s ease
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0)
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="splash">
+        <div class="sl-logo"><img id="sl-img" src="" alt="TSS" /></div>
+        <div class="sl-name">The Suit Story</div>
+        <div class="sl-tag">Where Every Suit Tells a Story</div>
+        <div class="sl-line"></div>
+    </div>
+
+    <nav>
+        <a class="nav-logo" href="#hero">
+            <img id="nav-logo" src="" alt="TSS" />
+            <span>The Suit Story</span>
+        </a>
+        <a class="nav-cta" href="#products">Explore</a>
+    </nav>
+
+    <section id="hero">
+        <div class="hd"></div>
+        <div class="hd"></div>
+        <p class="h-eye">Ethnic Couture · Est. 2025</p>
+        <h1 class="h-title">Where Every<br /><em>Suit</em> Tells<br />A Story</h1>
+        <p class="h-sub">Handcrafted ethnic wear that speaks the language of elegance, tradition, and modern grace.</p>
+        <div class="h-btns">
+            <a class="btn-p" href="#products">Explore Collection</a>
+            <a class="btn-o" href="#contact">Contact Us</a>
+        </div>
+        <div class="scroll-h"><span>Scroll</span>
+            <div class="sc-line"></div>
+        </div>
+    </section>
+
+    <section id="products">
+        <p class="s-label reveal">Our Collection</p>
+        <h2 class="s-title reveal">Latest Arrivals</h2>
+        <p class="s-sub reveal">Fresh drops, straight from our studio to your wardrobe.</p>
+        <div id="prod-wrap">
+            <div class="p-loader">
+                <div class="spin"></div><br />Loading collection...
+            </div>
+        </div>
+    </section>
+
+    <section id="story">
+        <p class="s-label reveal">Our Story</p>
+        <p class="sq reveal">"Fashion fades, but a well-told story in fabric — that lives forever."</p>
+        <p class="s-sub reveal" style="color:rgba(250,247,242,.52);margin-bottom:0">Born from a love for Indian
+            craftsmanship and contemporary sensibility, The Suit Story brings you ethnic wear that doesn't just dress
+            you — it defines you.</p>
+        <div class="founders reveal">
+            <div class="fcard">
+                <div class="fname">Suhani Lodha</div>
+                <div class="frole">Co-Founder</div>
+            </div>
+            <div class="fcard">
+                <div class="fname">Richi Lodha</div>
+                <div class="frole">Co-Founder</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <p class="s-label reveal">Get In Touch</p>
+        <h2 class="s-title reveal">Let's Connect</h2>
+        <p class="s-sub reveal">Tap to chat with us directly on WhatsApp.</p>
+        <div class="ccards reveal">
+            <a class="ccard" id="wa-suhani" href="#" target="_blank">
+                <div class="cicon"><svg viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
+                            fill="#25D366" />
+                        <path
+                            d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.96 7.96 0 01-4.065-1.112l-.291-.173-3.022.898.898-3.022-.173-.291A7.96 7.96 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"
+                            fill="#25D366" />
+                    </svg></div>
+                <div class="cinfo">
+                    <div class="clabel">Co-Founder</div>
+                    <div class="cname">Suhani Lodha</div>
+                    <div class="cnum" id="num-suhani"></div>
+                </div>
+            </a>
+            <a class="ccard" id="wa-richi" href="#" target="_blank">
+                <div class="cicon"><svg viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
+                            fill="#25D366" />
+                        <path
+                            d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.96 7.96 0 01-4.065-1.112l-.291-.173-3.022.898.898-3.022-.173-.291A7.96 7.96 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"
+                            fill="#25D366" />
+                    </svg></div>
+                <div class="cinfo">
+                    <div class="clabel">Co-Founder</div>
+                    <div class="cname">Richi Lodha</div>
+                    <div class="cnum" id="num-richi"></div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="fl"><img id="footer-logo" src="" alt="TSS" /></div>
+        <div class="fb">The Suit Story</div>
+        <div class="ft">Where Every Suit Tells a Story</div>
+        <div class="fd"></div>
+        <div class="fc">© 2026 The Suit Story · Suhani & Richi Lodha</div>
+    </footer>
+
+    <div id="lb">
+        <button class="lb-close" onclick="closeLb()">✕</button>
+        <div class="lb-box">
+            <img id="lb-img" src="" alt="" />
+            <div class="lb-act"><a id="lb-wa" class="lb-buy" href="#" target="_blank">💬 Buy Now on WhatsApp</a></div>
+        </div>
+    </div>
+
+    <script>
+        // ── CHANGE NUMBERS HERE ──────────────────────────────
+        const SUHANI_NUM = "919425982653"; // e.g. "919876543210"
+        const RICHI_NUM = "918120126881";
+        const SUHANI_DISP = "+91 94259 82653";
+        const RICHI_DISP = "+91 81201 26881";
+        // ─────────────────────────────────────────────────────
+
+        document.getElementById('num-suhani').textContent = SUHANI_DISP;
+        document.getElementById('num-richi').textContent = RICHI_DISP;
+
+        function waUrl(num, msg) { return `https://wa.me/${num}?text=${encodeURIComponent(msg)}` }
+        document.getElementById('wa-suhani').href = waUrl(SUHANI_NUM, "Hi Suhani! I saw The Suit Story collection and I'm interested 🌸");
+        document.getElementById('wa-richi').href = waUrl(RICHI_NUM, "Hi Richi! I saw The Suit Story collection and I'm interested 🌸");
+
+        // Splash hide
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const s = document.getElementById('splash');
+                s.style.transition = 'opacity .6s ease'; s.style.opacity = '0'; s.style.pointerEvents = 'none';
+                setTimeout(() => s.style.display = 'none', 700);
+            }, 2700);
+        });
+
+        // Reveal on scroll
+        const io = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) x.target.classList.add('visible') }), { threshold: .1 });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        // Logo from profile API
+        async function loadLogo() {
+            try {
+                const r = await fetch('/api/profile');
+                const d = await r.json();
+                if (d.logo) {
+                    ['sl-img', 'nav-logo', 'footer-logo'].forEach(id => {
+                        const el = document.getElementById(id); if (el) el.src = d.logo;
+                    });
+                }
+            } catch (e) { }
+        }
+
+        // Products
+        async function loadProducts() {
+            try {
+                const r = await fetch('/api/posts');
+                const d = await r.json();
+                if (!d.success) throw new Error(d.error);
+                const grid = document.createElement('div');
+                grid.className = 'pgrid';
+                d.posts.forEach((p, i) => {
+                    if (!p.image) return;
+                    const msg = `Hi! I'm interested in this outfit from The Suit Story 🌸\nPosted: ${p.timestamp}`;
+                    // Alternate between founders
+                    const num = i % 2 === 0 ? SUHANI_NUM : RICHI_NUM;
+                    const wa = waUrl(num, msg);
+                    const card = document.createElement('div');
+                    card.className = 'pcard';
+                    card.style.animationDelay = `${i * .04}s`;
+                    card.innerHTML = `
+        <div class="pimg" onclick="openLb('${p.image}','${wa}')">
+          <img src="${p.image}" alt="suit" loading="lazy" onerror="this.closest('.pcard').style.display='none'"/>
+          ${p.is_reel ? `<div class="rbadge"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>` : ''}
+        </div>
+        <div class="pfooter">
+          <a class="buy-btn" href="${wa}" target="_blank">Buy Now</a>
+        </div>`;
+                    grid.appendChild(card);
+                });
+                document.getElementById('prod-wrap').innerHTML = '';
+                document.getElementById('prod-wrap').appendChild(grid);
+            } catch (e) {
+                document.getElementById('prod-wrap').innerHTML = `<p style="text-align:center;color:var(--muted);padding:2rem;font-size:.82rem">Could not load products.<br/><small>${e.message}</small></p>`;
+            }
+        }
+
+        function openLb(img, wa) {
+            document.getElementById('lb-img').src = img;
+            document.getElementById('lb-wa').href = wa;
+            document.getElementById('lb').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLb() {
+            document.getElementById('lb').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.getElementById('lb').addEventListener('click', e => { if (e.target === document.getElementById('lb')) closeLb() });
+
+        loadLogo();
+        loadProducts();
+    </script>
+</body>
+
+</html>
