@@ -2,7 +2,14 @@ from flask import Flask, render_template, jsonify
 from instagrapi import Client
 import os
 
+import os
+
 app = Flask(__name__)
+
+
+
+port = int(os.environ.get("PORT", 5000))
+
 
 # ============================================================
 MY_USERNAME = "hn_1234321"        # tumhara login username
@@ -76,6 +83,13 @@ def get_posts():
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
+#
+#  if __name__ == "__main__":
+#     # app.run(debug=True, host="0.0.0.0", port=1200)
+#     app.run(debug=True, port=1200)
+
+
+
+
 if __name__ == "__main__":
-    # app.run(debug=True, host="0.0.0.0", port=1200)
-    app.run(debug=True, port=1200)
+    app.run(host="0.0.0.0", port=port)
