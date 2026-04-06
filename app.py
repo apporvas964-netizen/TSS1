@@ -208,27 +208,58 @@ def get_posts():
     try:
         client = get_client()
         info   = client.user_info_by_username_v1(TARGET_ACCOUNT)
-        medias = client.user_medias(info.pk, amount=108)
+        medias = client.user_medias(info.pk, amount=1080)
+
+        # posts = []
+        # for m in medias:
+        #     post = {
+        #         "id":         str(m.pk),
+        #         "type":       m.media_type,
+        #         "caption":    m.caption_text or "",
+        #         "like_count": m.like_count,
+        #         "timestamp":  m.taken_at.strftime("%d %b %Y"),
+        #     }
+        #     if m.media_type == 1:                        # Photo
+        #         post["image"] = str(m.thumbnail_url)
+        #     elif m.media_type == 2:                      # Reel/Video
+        #         post["image"]   = str(m.thumbnail_url)
+        #         post["is_reel"] = True
+        #     elif m.media_type == 8 and m.resources:     # Album
+        #         post["image"]    = str(m.resources[0].thumbnail_url)
+        #         post["is_album"] = True
+        #     else:
+        #         continue
+
 
         posts = []
         for m in medias:
-            post = {
-                "id":         str(m.pk),
-                "type":       m.media_type,
-                "caption":    m.caption_text or "",
-                "like_count": m.like_count,
-                "timestamp":  m.taken_at.strftime("%d %b %Y"),
-            }
-            if m.media_type == 1:                        # Photo
-                post["image"] = str(m.thumbnail_url)
-            elif m.media_type == 2:                      # Reel/Video
-                post["image"]   = str(m.thumbnail_url)
-                post["is_reel"] = True
-            elif m.media_type == 8 and m.resources:     # Album
-                post["image"]    = str(m.resources[0].thumbnail_url)
-                post["is_album"] = True
-            else:
+            try:
+                post = {
+                    "id": str(m.pk),
+                    "type": m.media_type,
+                    "caption": m.caption_text or "",
+                    "like_count": m.like_count,
+                    "timestamp": m.taken_at.strftime("%d %b %Y"),
+                }
+
+                if m.media_type == 1:
+                    post["image"] = str(m.thumbnail_url)
+                elif m.media_type == 2:
+                    post["image"] = str(m.thumbnail_url)
+                    post["is_reel"] = True
+                elif m.media_type == 8 and m.resources:
+                    post["image"] = str(m.resources[0].thumbnail_url)
+                    post["is_album"] = True
+                else:
+                    continue
+
+                posts.append(post)
+
+            except Exception as e:
+                print("POST ERROR:", str(e))
                 continue
+
+
 
             posts.append(post)
 
