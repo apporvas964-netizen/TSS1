@@ -144,8 +144,8 @@
 from flask import Flask, render_template, jsonify
 from instagrapi import Client
 import os
+import time
 
-import os
 
 app = Flask(__name__)
 
@@ -177,15 +177,40 @@ SESSION_FILE = "session.json"
 #     return cl
 
 
+# def get_client():
+#     global _logged_in
+#     if not _logged_in:
+#         if os.path.exists(SESSION_FILE):
+#             cl.load_settings(SESSION_FILE)
+#         else:
+#             raise Exception("Session file missing. Run login locally.")
+#         _logged_in = True
+#     return cl
+
+
+
+
+
 def get_client():
     global _logged_in
+
     if not _logged_in:
         if os.path.exists(SESSION_FILE):
             cl.load_settings(SESSION_FILE)
+            try:
+                cl.get_timeline_feed()   # check session valid
+            except:
+                cl.login(MY_USERNAME, MY_PASSWORD)
+                cl.dump_settings(SESSION_FILE)
         else:
-            raise Exception("Session file missing. Run login locally.")
+            cl.login(MY_USERNAME, MY_PASSWORD)
+            cl.dump_settings(SESSION_FILE)
+
         _logged_in = True
+
     return cl
+
+
 
 
 @app.route("/")
@@ -207,8 +232,9 @@ def get_profile():
 def get_posts():
     try:
         client = get_client()
+        time.sleep(2)
         info   = client.user_info_by_username_v1(TARGET_ACCOUNT)
-        medias = client.user_medias(info.pk, amount=10)
+        medias = client.user_medias(info.pk, amount=5)
 
         # posts = []
         # for m in medias:
